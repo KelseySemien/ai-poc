@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']  # Temporarily allow all, change to specific domain after 
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://your-app.vercel.app",  # You'll get this after Vercel deployment, add it then
+    "https://ai-poc-eosin.vercel.app",  # You'll get this after Vercel deployment, add it then
 ]
 
 
