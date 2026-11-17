@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,13 @@ SECRET_KEY = 'django-insecure-^chwfk%kix(0rm=va2o1jc8^8%y@qt)06-lzz(0+$@)1xhx))-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']  # Temporarily allow all, change to specific domain after deployment
+
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if render_hostname:
+    ALLOWED_HOSTS.append(render_hostname) # Temporarily allow all, change to specific domain after deployment
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
