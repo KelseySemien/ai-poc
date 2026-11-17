@@ -10,7 +10,7 @@ function App() {
     setLoading(true)
     setResponse('')
     try {
-      const res = await fetch('http://localhost:8000/api/ask/', {
+      const res = await fetch('https://ai-poc-wauw.onrender.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message }),
