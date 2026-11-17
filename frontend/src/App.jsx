@@ -10,7 +10,7 @@ function App() {
     setLoading(true)
     setResponse('')
     try {
-      const res = await fetch('https://ai-poc-wauw.onrender.com', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ask/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message }),
