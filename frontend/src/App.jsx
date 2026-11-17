@@ -1,26 +1,33 @@
 import { useState } from 'react'
 import './App.css'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 function App() {
   const [message, setMessage] = useState('')
   const [response, setResponse] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
+    if (!message.trim()) return
     setLoading(true)
     setResponse('')
     try {
-      const res = await fetch(`https://ai-poc.onrender.com/api/ask/`, {
+      const res = await fetch(`${API_URL}/api/ask/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message }),
       })
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`)
+      }
       const data = await res.json()
-      setResponse(data.response)
+      setResponse(data.response ?? data.error ?? 'No response')
     } catch (err) {
-      setResponse('Error connecting to backend.')
+      setResponse(`Error: ${err.message}`)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
@@ -35,7 +42,7 @@ function App() {
         placeholder="Enter a message..."
       />
       <br />
-      <button onClick={handleSubmit} disabled={loading || !message}>
+      <button onClick={handleSubmit} disabled={loading || !message.trim()}>
         {loading ? 'Sending...' : 'Ask AI'}
       </button>
       {response && (
@@ -45,6 +52,7 @@ function App() {
             padding: '1rem',
             background: '#f0f0f0',
             borderRadius: '4px',
+            whiteSpace: 'pre-wrap',
           }}
         >
           <strong>Response:</strong> {response}
